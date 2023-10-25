@@ -1,9 +1,8 @@
 # Stage 1: Build the Kotlin application with Gradle
-FROM gradle:8.2-jdk17-alpine AS builder
+FROM openjdk:17-jdk-alpine AS builder
 
 WORKDIR /app
-COPY build.gradle.kts settings.gradle.kts /app/
-COPY src /app/src
+COPY . .
 
 RUN ./gradlew build
 
