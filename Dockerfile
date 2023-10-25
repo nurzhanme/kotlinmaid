@@ -8,7 +8,7 @@ COPY src /app/src
 RUN gradle build --no-daemon
 
 # Stage 2: Create a lightweight image to run the application
-FROM adoptopenjdk:17-jre-hotspot-bionic
+FROM eclipse-temurin:17-jre-alpine
 
 WORKDIR /app
 
