@@ -18,6 +18,12 @@ tasks.test {
     useJUnitPlatform()
 }
 
+tasks.withType<Jar> {
+    manifest {
+        attributes["Main-Class"] = "MainKt"
+    }
+}
+
 kotlin {
     jvmToolchain(8)
 }
