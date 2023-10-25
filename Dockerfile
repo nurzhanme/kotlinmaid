@@ -3,7 +3,7 @@ FROM openjdk:17-jdk-alpine AS builder
 
 WORKDIR /app
 COPY . .
-
+RUN chmod +x ./gradlew
 RUN ./gradlew build
 
 # Stage 2: Create a lightweight image to run the application
