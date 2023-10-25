@@ -5,7 +5,7 @@ WORKDIR /app
 COPY build.gradle.kts settings.gradle.kts /app/
 COPY src /app/src
 
-RUN gradle build --no-daemon
+RUN ./gradlew build
 
 # Stage 2: Create a lightweight image to run the application
 FROM eclipse-temurin:17-jre-alpine
