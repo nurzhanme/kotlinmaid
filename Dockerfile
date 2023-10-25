@@ -1,13 +1,18 @@
-# Dockerfile focused on production use case
-# Builder stage needs JDK and gradle
-FROM openjdk:17-jdk-alpine as builder
-WORKDIR /root
-COPY . .
-RUN chmod +x ./gradlew
-RUN ./gradlew build
+# Stage 1: Build the Kotlin application with Gradle
+FROM gradle:8.2-jdk17-alpine AS builder
 
-# Runner stage only needs JRE and JAR
-FROM eclipse-temurin:17-jre-alpine
-WORKDIR /root
-COPY --from=builder /root/build/libs/*.jar ./app.jar
+WORKDIR /app
+COPY build.gradle.kts settings.gradle.kts /app/
+COPY src /app/src
+
+RUN gradle build --no-daemon
+
+# Stage 2: Create a lightweight image to run the application
+FROM adoptopenjdk:17-jre-hotspot-bionic
+
+WORKDIR /app
+
+# Copy the built JAR from the builder stage
+COPY --from=builder /app/build/libs/*.jar /app/app.jar
+
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","./app.jar"]
