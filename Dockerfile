@@ -7,7 +7,7 @@ RUN chmod +x ./gradlew
 RUN ./gradlew build --no-daemon
 
 # Stage 2: Create a lightweight image to run the application
-FROM eclipse-temurin:17-jre-alpine
+FROM amazoncorretto:17-alpine3.18
 
 WORKDIR /app
 
